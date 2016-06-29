@@ -1,65 +1,62 @@
 <?php
 
-namespace CodePress\CodeCategory\Controllers;
+namespace CodePress\CodeTag\Controllers;
 
-use CodePress\CodeCategory\Models\Category;
+use CodePress\CodeTag\Models\Tag;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Request;
 
-class AdminCategoriesController extends Controller
+class AdminTagsController extends Controller
 {
     /**
-     * @var Category
+     * @var Tag
      */
-    private $category;
+    private $tag;
 
     /**
      * @var ResponseFactory
      */
     private $response;
 
-    public function __construct(ResponseFactory $response, Category $category)
+    public function __construct(ResponseFactory $response, Tag $tag)
     {
-        $this->category = $category;
+        $this->tag = $tag;
         $this->response = $response;
     }
 
     public function index()
     {
-        $categories = $this->category->all();
-        return $this->response->view('codecategory::index', compact('categories'));
+        $tags = $this->tag->paginate(5);
+        return $this->response->view('codetag::index', compact('tags'));
     }
 
     public function create()
     {
-        $categories = $this->category->pluck('name', 'id');
-        $category   = new Category();
-        $title      = 'Create Category';
-        return $this->response->view('codecategory::form', compact('categories', 'category', 'title'));
+        $tag   = new Tag();
+        $title      = 'Create Tag';
+        return $this->response->view('codetag::form', compact('tag', 'title'));
     }
 
     public function store(Request $request)
     {
         if (is_numeric($request->get('id'))){
-            $category  = Category::findOrFail($request->get('id'));
-            $category->update($request->all());
+            $tag  = Tag::findOrFail($request->get('id'));
+            $tag->update($request->all());
         } else {
-            $this->category->create($request->all());
+            $this->tag->create($request->all());
         }
 
-        return redirect()->route('admin.categories.index');
+        return redirect()->route('admin.tags.index');
     }
 
     public function edit($id) {
-        $category   = Category::findOrFail($id);
-        $categories = $this->category->pluck('name', 'id');
-        $title      = 'Edit Category';
-        return view('codecategory::form', compact('categories', 'category', 'title'));
+        $tag   = Tag::findOrFail($id);
+        $title      = 'Edit Tag';
+        return view('codetag::form', compact('tag', 'title'));
     }
 
     public function destroy($id) {
-        Category::find($id)->delete();
-        \Session::flash('flash_message', 'Category has been deleted.');
-        return redirect()->route('admin.categories.index');
+        Tag::find($id)->delete();
+        return redirect()->route('admin.tags.index');
     }
 }

@@ -6,8 +6,8 @@
             <div class="col-md-10 col-md-offset-1">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h3>Categories!</h3>
-                        <a href="{{ route('admin.tags.create') }}" class="btn btn-success">Create Category</a>
+                        <h3>Tags!</h3>
+                        <a href="{{ route('admin.tags.create') }}" class="btn btn-success">Create Tag</a>
                     </div>
 
                     <div class="panel-body">
@@ -16,7 +16,6 @@
                                 <thead>
                                     <th>#</th>
                                     <th>Name</th>
-                                    <th>Active</th>
                                     <th></th>
                                 </thead>
                                 <tbody>
@@ -24,12 +23,14 @@
                                     <tr>
                                     <th scope="row">{{ $tag->id }}</th>
                                     <td>{{ $tag->name }}</td>
-                                    <td>@if ($tag->active)<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>@else <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> @endif</td>
-                                        <td><a href="{{ route('admin.tags.edit', array('id' => $tag->id)) }}" class="btn btn-sm btn-primary">Update</a>  <a href="{{ route('admin.tags.destroy', array('id' => $tag->id)) }}" class="btn btn-sm btn-danger">Delete</a></td>
+                                    <td><a href="{{ route('admin.tags.edit', array('id' => $tag->id)) }}" class="btn btn-sm btn-primary">Update</a>  <a href="{{ route('admin.tags.destroy', array('id' => $tag->id)) }}" class="btn btn-sm btn-danger">Delete</a></td>
                                     </tr>
                                 @endforeach
                                 </tbody>
                             </table>
+                            <div style="text-align:center;">
+                                {!! $tags->render()!!}
+                            </div>
                         @else
                             I don't have any records!
                         @endif

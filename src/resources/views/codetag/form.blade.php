@@ -18,12 +18,7 @@
                         </div>
 
                         <div class="form-group">
-                            {!! Form::label('active', 'Active') !!}
-                            {!! Form::checkbox('active', $tag->active, array('class' => 'form-control'))!!}
-                        </div>
-
-                        <div class="form-group">
-                            {!! Form::submit('Save Category', array('id' => 'btn_submit', 'class' => 'btn btn-primary')) !!}
+                            {!! Form::submit('Save Tag', array('id' => 'btn_submit', 'class' => 'btn btn-primary')) !!}
                         </div>
 
                         {{ Form::close() }}
